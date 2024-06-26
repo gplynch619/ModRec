@@ -1,0 +1,161 @@
+# Parameter file for the example model
+
+# Specify the parameters for the model, their minimum value and their maximum value
+# (as you would in CLASS) 
+#
+#           | name              | min-value     | max-value      |
+#           |-------------------|---------------|----------------|
+parameters={"omega_b": [0.017679929999875305, 0.027074810000124697],
+	    "omega_cdm": [0.10277449520012398, 0.137432504799876],
+	    "n_s": [0.8784417847140357, 1.0533428152859643],
+	    "tau_reio": [0.0276, 0.1],
+	    "ln10^{10}A_s": [2.837, 3.257],
+	    "H0": [50, 90],
+		'qt_1': [-0.0013052091359384119, 0.013052091359384118],
+		'qt_2': [-0.0035620536008888672, 0.035620536008888676],
+		'qt_3': [-0.020264309227000506, 0.20264309227000507],
+		'qt_4': [-0.1042872381403002, 0.9882954676322664],
+		'qt_5': [-0.32253847072874486, 0.7700442350438217],
+		'qt_6': [-0.6458679366486046, 0.4467147691239619],
+		'qt_7': [-0.9190513319029894, 0.17353137386957718]}
+
+
+# Specify additional parameters
+# current limits are 2.5 sigma equivlent
+#		"Omega_k": [-.3, 0.3],
+
+
+
+#########--------- Training parameters ---------#########
+
+train_ratio          = 0.95		  # Amount of data used for training
+                                          # (rest is used for testing)
+
+val_ratio            = 0.05	      	  # Amount of training data used for validation
+
+epochs               = 150                # Number of cycles/epochs during training
+
+batchsize            = 128  # Batchsize of data when training
+
+activation_function  = 'alsing'           # Activation function - as defined in TensorFlow
+                                          # or source/custom_functions.py
+
+loss_function        = 'mean_squared_error'  # Loss function - as defined in TensorFlow
+                                          # or source/custom_functions.py
+
+N_hidden_layers      = 6                  # Number of hidden layers in fully-connected
+                                          # architecture
+
+N_nodes              = 512
+
+normalization_method = 'standardization'  # Normalisation method for output data
+#normalization_method = 'min-max'  # Normalisation method for output data
+
+#########--------- Sampling parameters ---------#########
+
+N = 10000       # Amount of points in lhc. When using the iterative 
+               # method this number refers to only the initial lhc
+
+output_Cl      = ['tt', 'te', 'ee', 'pp']         # Cl spectra in output
+
+ll_max_request = 5001
+
+output_z       = ["H", "angular_distance", "sigma8_z", "x_e", "g"]
+
+output_derived = ['Omega_Lambda',  # omega lambda
+		  'sigma8',        # sigma 8
+		  'YHe', 	   # primordial helium abundance
+		  'z_d',           # redshift of baryon drag
+		  'rs_d', 	   # comoving sound horizon at baryon drag (for BAO)
+		  'z_rec',         # redshift of peak visibility
+		  'tau_rec', 	   # 
+		  'ra_rec',	   # conformal angular diameter distance to re
+		  'z_reio',        # redshift of reionization
+		  'z_star',	   # redshift where opt. depth to thomson scattering = 1
+		  'tau_star',      #
+		  'rs_star',       # comoving sound horizon at zstar (eqn 1 of HHG)
+		  'rd_star',       # comoving photon damping scale at z_star
+		  'da_star', 	   # physical angular diameter distance to z_star
+          '100*theta_star' # comoving sound horizon at z_star
+		 ]
+
+extra_input    = {'N_ur': 2.0308,
+		  'N_ncdm': 1,
+		  'm_ncdm': 0.06,
+		  'T_ncdm': 0.71611, #1 species of massive neutrinos
+		  'accurate_lensing': 1.0,
+		  'k_max_tau0_over_l_max': 15.00,
+		  'P_k_max_1/Mpc':  500.0,
+		  'perturbations_sampling_stepsize': 0.05,
+		  'non_linear': 'hmcode',
+		  'eta_0': 0.603,
+		  'c_min': 3.130,
+		  'l_max_scalars': 8000,
+		  'xe_pert_type': 'control',
+          	  'xe_pert_num': 9,
+          	  'xe_control_pivots': "533.3333,666.6667,800.0000,933.3333,1066.6667,1200.0000,1333.3333,1466.6667,1600.0000",
+          	  'zmin_pert': 533.3333,
+          	  'zmax_pert': 1600.0000,
+          	  'start_sources_at_tau_c_over_tau_h': 0.004
+		  }
+
+bestfit_guesses = 	{'qt_1': 0.0, 
+					'qt_2': 0.0, 
+					'qt_3': 0.0, 
+					'qt_4': 0.0, 
+					'qt_5': 0.0, 
+					'qt_6': 0.0, 
+					'qt_7': 0.0}
+
+#sigma_guesses   = {'parameter': value}  # Guesses for sigma for parameters 
+
+#control_point_priors = {'q_1': 6.728741018853548, 
+#			'q_2': 5.722696854368326, 
+#			'q_3': 3.9687171367324208, 
+#			'q_4': 2.248832712062792, 
+#			'q_5': 0.8702255431036797, 
+#			'q_6': -0.36867475990389875, 
+#			'q_7': -1.6669835647970919}
+
+
+prior_ranges    = parameters            # Prior ranges for mcmc sampling. A dictionary
+                                         # in the same form as parameters
+
+#log_priors      = []                    # List of parameter names to be sampled
+                                         # with a logarithmic prior
+
+
+sampling      = 'iterative'    # Sampling of training data can be done with the
+                               # methods 'lhc' and 'iterative'. Some parameters
+                               # are only usable wth the iterative method
+
+#input_model_file = "/home/gplynch/projects/connect_public/data/modrec/number_10/model_params.txt" 
+
+mcmc_sampler  = 'cobaya'       # mcmc sampler to use in iterations (cobaya or montepython)
+
+#initial_model = ""    # Name of initial model to start the iterations
+
+#initial_model = "modrec_extended_12"
+
+resume_iterations = True
+
+mcmc_tol      = 0.02           # Tolerance of R-1 values for individual mcmc runs
+
+iter_tol      = 0.01           # Tolerance of R-1 values for subsequent iterations
+
+N_max_points  = 2e+4           # The maximum number of points to take from each iteration
+
+keep_first_iteration = False   # Whether to keep data from first iteration (usually bad)
+
+sampling_likelihoods = ['Planck_lite', 'Planck_lowl_TT', 'Planck_lowl_EE']
+#sampling_likelihoods = ['Planck_lite']
+
+#########---------- Saving parameters ----------#########
+
+jobname = 'modrec_train'     # Name job and output folder
+
+save_name = 'modrec_extended'        # Name of trained models
+
+overwrite_model = False      # Whether or not to overwrite model names or to append a suffix
+
+jobname = 'modrec_train'
