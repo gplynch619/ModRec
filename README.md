@@ -6,7 +6,7 @@ The trained tensorflow model is contained in the folder `trained_models/modrec_e
 
 # Usage
 
-The notebook `example.ipynb` has a brief example of how to load the emulator and get predictions using the wrapper. This wrapper is intended for use outside of MCMC sampler. To use in an MCMC, use the MCMC plugin, originally provided from CONNECT.
+The notebook `example.ipynb` has a brief example of how to load the emulator and get predictions using the wrapper. This wrapper is intended for use outside of MCMC sampler. To use in an MCMC, use the MCMC plugin, originally provided from CONNECT. Keep in mind that the emulator is only trained to be accurate in certain regions of parameter space, and using it outside this region will lead to noisy or inaccurate emulator predictions. It is usually obvious based on the output when this has happened, but it is something to keep in mind. See [2404.05715](https://arxiv.org/abs/2404.05715) for details.
 
 Due to some changes between CONNECT versions with how models are saved, there may be some backwards compatibility issues if you try to use this emulator with the MCMC plugin provided by the latest CONNECT version. As such, this repository also contains an older version of the CONNECT plugin for [COBAYA](https://cobaya.readthedocs.io/en/latest/), which should work for this emulator. To ensure this works, you should modify `mcmc_plugin/connect.conf` to point towards the correct paths. In your COBAYA input file, your theory block should look like
 
